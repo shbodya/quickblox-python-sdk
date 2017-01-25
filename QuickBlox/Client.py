@@ -82,18 +82,9 @@ class Client(object):
 
     def __parse_blob_params(self, uri):
         query = parse_qs(uri.query)
-        params = {
-            'Content-Type': query.get('Content-Type')[0],
-            'Expires': query.get('Expires')[0],
-            'acl': query.get('acl')[0],
-            'key': query.get('key')[0],
-            'policy': query.get('policy')[0],
-            'success_action_status': query.get('success_action_status')[0],
-            'x-amz-algorithm': query.get('x-amz-algorithm')[0],
-            'x-amz-credential': query.get('x-amz-credential')[0],
-            'x-amz-date': query.get('x-amz-date')[0],
-            'x-amz-signature': query.get('x-amz-signature')[0],
-        }
+        params = {}
+        for key in query:
+            params[key] = query.get(key)[0]
         return params
 
     def _request(self, method, url, data=None, headers=None, params=None):
